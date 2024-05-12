@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/obj
+/.vs/VSWorkspaceState.json
+/.vs/CoffeeMachine/v17
+/.vs/CoffeeMachine/DesignTimeBuild
+/.vs/CoffeeMachine/FileContentIndex
