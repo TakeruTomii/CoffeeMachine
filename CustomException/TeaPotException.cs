@@ -1,4 +1,4 @@
-﻿namespace CoffeeMachine.Brewer
+﻿namespace CoffeeMachine.CustomException
 {
     public class TeaPotException : Exception
     {

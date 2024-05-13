@@ -1,4 +1,6 @@
-﻿namespace CoffeeMachine.Brewer
+﻿using CoffeeMachine.CustomException;
+
+namespace CoffeeMachine.Brewer
 {
     public class BrewService : IBrewService
     {

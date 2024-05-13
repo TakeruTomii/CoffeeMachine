@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CoffeeMachine.CustomException;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CoffeeMachine.Brewer
 {
