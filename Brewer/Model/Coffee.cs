@@ -1,4 +1,4 @@
-﻿namespace CoffeeMachine.Brewer
+﻿namespace CoffeeMachine.Brewer.Model
 {
     public class Coffee
     {

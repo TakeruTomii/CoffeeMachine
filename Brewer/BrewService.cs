@@ -1,4 +1,5 @@
 ﻿using CoffeeMachine.Brewer.Interface;
+using CoffeeMachine.Brewer.Model;
 using CoffeeMachine.CustomException;
 
 namespace CoffeeMachine.Brewer

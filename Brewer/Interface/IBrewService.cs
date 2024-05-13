@@ -1,4 +1,6 @@
-﻿namespace CoffeeMachine.Brewer.Interface
+﻿using CoffeeMachine.Brewer.Model;
+
+namespace CoffeeMachine.Brewer.Interface
 {
     public interface IBrewService
     {
