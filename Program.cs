@@ -1,4 +1,5 @@
 using CoffeeMachine.Brewer;
+using CoffeeMachine.Brewer.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 

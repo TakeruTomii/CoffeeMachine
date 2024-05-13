@@ -1,4 +1,6 @@
-﻿namespace CoffeeMachine.Brewer
+﻿using CoffeeMachine.Brewer.Interface;
+
+namespace CoffeeMachine.Brewer
 {
     public class CoffeeTimer : ICoffeeTimer
     {
