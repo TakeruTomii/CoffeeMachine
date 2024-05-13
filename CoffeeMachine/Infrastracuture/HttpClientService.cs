@@ -3,10 +3,10 @@ using System.Xml.Linq;
 
 namespace CoffeeMachine.Infrastracuture
 {
-    public class HttpClientService
+    public class HttpClientService: IHttpClientService
     {
         readonly HttpClient _httpClient;
-        async Task<T> GetAsync<T>(Uri url)
+        public async Task<T> GetAsync<T>(Uri url)
         {
             var res = await _httpClient.GetAsync(url);
 
