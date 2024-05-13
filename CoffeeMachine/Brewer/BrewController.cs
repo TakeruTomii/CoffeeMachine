@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoffeeMachine.Brewer
 {
-    [Route("brew-coffee")]
     [ApiController]
     public class BrewController : ControllerBase
     {
