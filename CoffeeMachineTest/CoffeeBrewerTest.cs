@@ -1,8 +1,4 @@
 ﻿using CoffeeMachine.Brewer;
-using CoffeeMachine.Brewer.Interface;
-using CoffeeMachine.Brewer.Model;
-using CoffeeMachine.CustomException;
-using Moq;
 
 namespace CoffeeMachineTest
 {
@@ -22,7 +18,8 @@ namespace CoffeeMachineTest
         public void GetPreparedTime_ExcecuteFiveTimes_ReturnFalse()
         {
             var _brewer = new CoffeeBrewer();
-            for(var i = 0; i < 4; i++) {
+            for (var i = 0; i < 4; i++)
+            {
                 _brewer.IsSuccessfullyBrewed();
             }
             var res = _brewer.IsSuccessfullyBrewed();
