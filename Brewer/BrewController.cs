@@ -27,11 +27,11 @@ namespace CoffeeMachine.Brewer
             }
             catch (TeaPotException ex)
             {
-                return StatusCode(418, value: ex.Message);
+                return StatusCode(StatusCodes.Status418ImATeapot, value: ex.Message);
             }
             catch (OutOfCoffeeException ex)
             {
-                return StatusCode(503, value: ex.Message);
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, value: ex.Message);
             }
         }
     }
