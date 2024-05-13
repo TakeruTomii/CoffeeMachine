@@ -7,6 +7,7 @@ namespace CoffeeMachine.Brewer
     public class BrewService : IBrewService
     {
         private const string BREW_MESSAGE = "Your piping hot coffee is ready";
+        private const string ICED_COFFEE_MESSAGE = "Your refreshing iced coffee is ready";
 
         private readonly ICoffeeTimer _timer;
         private readonly ICoffeeBrewer _brewer;
@@ -34,6 +35,11 @@ namespace CoffeeMachine.Brewer
                 prepared = preparedTime
             };
 
+            if (ShouldMakeIcedCoffee())
+            {
+                res.message = ICED_COFFEE_MESSAGE;
+            }
+
             return res;
         }
 
@@ -41,6 +47,11 @@ namespace CoffeeMachine.Brewer
         {
             var date = DateTime.Parse(dateTime);
             return date.Day == 1 && date.Month == 4;
+        }
+
+        private bool ShouldMakeIcedCoffee()
+        {
+            return false;
         }
     }
 }
