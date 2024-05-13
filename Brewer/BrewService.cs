@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace CoffeeMachine.Brewer
+﻿namespace CoffeeMachine.Brewer
 {
     public class BrewService : IBrewService
     {

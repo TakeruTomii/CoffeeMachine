@@ -7,7 +7,7 @@
         public bool IsSuccessfullyBrewed()
         {
             counter++;
-            if(counter >= MAX_BREW)
+            if (counter >= MAX_BREW)
             {
                 counter = 0;
                 return false;
