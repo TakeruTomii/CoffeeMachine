@@ -21,7 +21,7 @@ namespace CoffeeMachine.Brewer
         {
             try
             {
-                return new Coffee();
+                return ;
             } 
             catch (Exception ex)
             {

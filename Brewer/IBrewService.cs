@@ -1,6 +1,6 @@
 ﻿namespace CoffeeMachine.Brewer
 {
-    public interface ICoffeeService
+    public interface IBrewService
     {
         Coffee Brew();
     }
