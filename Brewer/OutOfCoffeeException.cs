@@ -2,6 +2,8 @@
 {
     public class OutOfCoffeeException : Exception
     {
-        public OutOfCoffeeException(string message) : base(message){}
+        private const string defaultMessage = "Sorry, we are out of coffee";
+        public OutOfCoffeeException() : base(defaultMessage) { }
+        public OutOfCoffeeException(string message) : base(message) { }
     }
 }
