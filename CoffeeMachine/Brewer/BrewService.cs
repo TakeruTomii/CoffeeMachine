@@ -9,18 +9,10 @@ namespace CoffeeMachine.Brewer
 {
     public class BrewService : IBrewService
     {
-        private const string BREW_MESSAGE = "Your piping hot coffee is ready";
-        private const string ICED_COFFEE_MESSAGE = "Your refreshing iced coffee is ready";
-        private const int ICED_COFFEE_TEMPERATURE = 30;
-        private const string LATITUDE_KEY = "GeologicalSetting:NZ:AKL:Latitude";
-        private const string LONGITUDE_KEY = "GeologicalSetting:NZ:AKL:Longitude";
-        private const string WEATHER_API_KEY = "WeatherApiKey";
-        private const string BASE_URL = "WeatherBaseUrl";
-
         private readonly ICoffeeTimer _timer;
         private readonly ICoffeeBrewer _brewer;
         private readonly IHttpClientService _httpClient;
-        private readonly IConfiguration _configuration;
+        private readonly string _weatherApiKey;
 
         public BrewService(
             ICoffeeTimer timer, 
@@ -31,7 +23,7 @@ namespace CoffeeMachine.Brewer
             _timer = timer;
             _brewer = brewer;
             _httpClient = httpClient;
-            _configuration = configuration;
+            _weatherApiKey = configuration[BrewerConstants.KEY_WEATHER_API_KEY];
         }
         public async Task<Coffee> Brew()
         {
@@ -48,13 +40,13 @@ namespace CoffeeMachine.Brewer
 
             var res = new Coffee
             {
-                message = BREW_MESSAGE,
+                message = BrewerConstants.BREW_MESSAGE,
                 prepared = preparedTime
             };
 
             if (await ShouldMakeIcedCoffee())
             {
-                res.message = ICED_COFFEE_MESSAGE;
+                res.message = BrewerConstants.ICED_COFFEE_MESSAGE;
             }
 
             return res;
@@ -68,28 +60,27 @@ namespace CoffeeMachine.Brewer
 
         private async Task<bool> ShouldMakeIcedCoffee()
         {
-            return await GetCurrentTemperature() >= ICED_COFFEE_TEMPERATURE;
+            return await GetCurrentTemperature() >= BrewerConstants.ICED_COFFEE_TEMPERATURE;
         }
 
         private async Task<int> GetCurrentTemperature()
         {
             Uri weatherUrl = ComposeCurrentTemperatureUrl();
             var weather = await _httpClient.GetAsync<Weather>(weatherUrl);
-            
-            return Convert.ToInt32(weather.main.temp);
+            return Convert.ToInt32(Math.Floor(weather.main.temp));
         }
 
         private Uri ComposeCurrentTemperatureUrl()
         {
-            var parameters = new Dictionary<string, string>();
-            parameters.Add("lat", _configuration[LATITUDE_KEY]);
-            parameters.Add("lon", _configuration[LONGITUDE_KEY]);
-            parameters.Add("appid", _configuration[WEATHER_API_KEY]);
-            parameters.Add("units", "metric");
+            var parameters = new Dictionary<string, string>
+            {
+                { BrewerConstants.PARAM_LATITUDE, BrewerConstants.NZ_LATITUDE.ToString() },
+                { BrewerConstants.PARAM_LONGITUDE, BrewerConstants.NZ_LONGITUDE.ToString() },
+                { BrewerConstants.PARAM_APIKEY, _weatherApiKey },
+                { BrewerConstants.PARAM_UNITS, BrewerConstants.UNITS_VALUE }
+            };
 
-            var baseUrl = _configuration[BASE_URL];
-
-            var uriBuilder = new UriBuilder(baseUrl);
+            var uriBuilder = new UriBuilder(BrewerConstants.WEATHER_BASE_URL);
             uriBuilder.Query = queryBuilder(parameters);
 
             return uriBuilder.Uri;
@@ -100,9 +91,9 @@ namespace CoffeeMachine.Brewer
             var builder = new StringBuilder();
             foreach ( var parameter in parameters ) { 
                 builder.Append(parameter.Key)
-                    .Append("=")
+                    .Append(BrewerConstants.CONNECTOR_KEY_VALUE)
                     .Append(parameter.Value)
-                    .Append("&");
+                    .Append(BrewerConstants.CONNECTOR_PARAMS);
             }
             builder.Remove(builder.Length - 1, 1);
             return builder.ToString();
