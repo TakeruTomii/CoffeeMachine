@@ -1,5 +1,6 @@
 using CoffeeMachine.Brewer;
 using CoffeeMachine.Brewer.Interface;
+using CoffeeMachine.Infrastracuture;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBrewService, BrewService>();
 builder.Services.AddTransient<ICoffeeTimer, CoffeeTimer>();
 builder.Services.AddSingleton<ICoffeeBrewer, CoffeeBrewer>();
+builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
 
 var app = builder.Build();
 
