@@ -11,7 +11,6 @@ namespace CoffeeMachineTest
     [TestClass]
     public class BrewServiceTests
     {
-        private const string BREW_MESSAGE = "Your piping hot coffee is ready";
         private const string VALID_DATE = "2021-02-03T11:56:24+0900";
         private const string APRIL_FOOL = "2021-04-01T11:56:24+0900";
         private const double HOT_COFFEE_TEMPERATURE = 29.9;
@@ -35,9 +34,12 @@ namespace CoffeeMachineTest
         }
 
         [TestMethod]
-        public async Task Brew_ExcecuteOnce_ReturnCoffeeInfo()
+        public async Task Brew_ExcecuteUnder30Degrees_ReturnHotCoffeeInfo()
         {
-            var expectedRes = new Coffee { message = BREW_MESSAGE, prepared = VALID_DATE };
+            var expectedRes = new Coffee { 
+                message = BrewerConstants.BREW_MESSAGE, 
+                prepared = VALID_DATE 
+            };
             var main = new Main() { temp = HOT_COFFEE_TEMPERATURE };
             var weather = new Weather() { main = main };
             _timer.Setup(x => x.GetPreparedTime()).Returns(VALID_DATE);
@@ -46,7 +48,37 @@ namespace CoffeeMachineTest
                 .Setup(x => x.GetAsync<Weather>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult(weather));
 
-            _service = new BrewService(_timer.Object, _brewer.Object, _httpClient.Object, _configuration.Object);
+            _service = new BrewService(
+                _timer.Object, 
+                _brewer.Object, 
+                _httpClient.Object, 
+                _configuration.Object);
+            var res = await _service.Brew();
+
+            Assert.AreEqual(expectedRes.message, res.message);
+            Assert.AreEqual(expectedRes.prepared, res.prepared);
+        }
+
+        [TestMethod]
+        public async Task Brew_Excecute30Degrees_ReturnIcedCoffeeInfo()
+        {
+            var expectedRes = new Coffee { 
+                message = BrewerConstants.ICED_COFFEE_MESSAGE, 
+                prepared = VALID_DATE 
+            };
+            var main = new Main() { temp = ICED_COFFEE_TEMPERATURE };
+            var weather = new Weather() { main = main };
+            _timer.Setup(x => x.GetPreparedTime()).Returns(VALID_DATE);
+            _brewer.Setup(x => x.IsSuccessfullyBrewed()).Returns(true);
+            _httpClient
+                .Setup(x => x.GetAsync<Weather>(It.IsAny<Uri>()))
+                .Returns(Task.FromResult(weather));
+
+            _service = new BrewService(
+                _timer.Object, 
+                _brewer.Object, 
+                _httpClient.Object, 
+                _configuration.Object);
             var res = await _service.Brew();
 
             Assert.AreEqual(expectedRes.message, res.message);
@@ -69,7 +101,11 @@ namespace CoffeeMachineTest
                 .Setup(x => x.GetAsync<Weather>(It.IsAny<Uri>()))
                 .Returns(Task.FromResult(weather));
 
-            _service = new BrewService(_timer.Object, _brewer.Object, _httpClient.Object, _configuration.Object);
+            _service = new BrewService(
+                _timer.Object, 
+                _brewer.Object, 
+                _httpClient.Object, 
+                _configuration.Object);
 
             for (var i = 0; i < 4; i++)
             {
