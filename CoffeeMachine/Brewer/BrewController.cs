@@ -21,11 +21,11 @@ namespace CoffeeMachine.Brewer
 
         [HttpGet]
         [Route("brew-coffee")]
-        public ActionResult<Coffee> BrewCoffee()
+        public async Task<ActionResult<Coffee>> BrewCoffeeAsync()
         {
             try
             {
-                return _brewService.Brew();
+                return await _brewService.Brew();
             }
             catch (TeaPotException ex)
             {

@@ -4,7 +4,11 @@ namespace CoffeeMachine.Brewer.Model
 {
     public class Weather
     {
-        [JsonPropertyName("main.temp")]
-        public int Temperature { get; set; }
+        public Main main { get; set; }
+    }
+
+    public class Main
+    {
+        public double temp { get; set; }
     }
 }

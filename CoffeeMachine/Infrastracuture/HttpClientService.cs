@@ -6,6 +6,11 @@ namespace CoffeeMachine.Infrastracuture
     public class HttpClientService: IHttpClientService
     {
         readonly HttpClient _httpClient;
+
+        public HttpClientService()
+        {
+            _httpClient = new HttpClient();
+        }
         public async Task<T> GetAsync<T>(Uri url)
         {
             var res = await _httpClient.GetAsync(url);
