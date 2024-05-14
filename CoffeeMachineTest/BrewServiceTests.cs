@@ -36,9 +36,10 @@ namespace CoffeeMachineTest
         [TestMethod]
         public async Task Brew_ExcecuteUnder30Degrees_ReturnHotCoffeeInfo()
         {
-            var expectedRes = new Coffee { 
-                message = BrewerConstants.BREW_MESSAGE, 
-                prepared = VALID_DATE 
+            var expectedRes = new Coffee
+            {
+                message = BrewerConstants.BREW_MESSAGE,
+                prepared = VALID_DATE
             };
             var main = new Main() { temp = HOT_COFFEE_TEMPERATURE };
             var weather = new Weather() { main = main };
@@ -49,9 +50,9 @@ namespace CoffeeMachineTest
                 .Returns(Task.FromResult(weather));
 
             _service = new BrewService(
-                _timer.Object, 
-                _brewer.Object, 
-                _httpClient.Object, 
+                _timer.Object,
+                _brewer.Object,
+                _httpClient.Object,
                 _configuration.Object);
             var res = await _service.Brew();
 
@@ -62,9 +63,10 @@ namespace CoffeeMachineTest
         [TestMethod]
         public async Task Brew_Excecute30Degrees_ReturnIcedCoffeeInfo()
         {
-            var expectedRes = new Coffee { 
-                message = BrewerConstants.ICED_COFFEE_MESSAGE, 
-                prepared = VALID_DATE 
+            var expectedRes = new Coffee
+            {
+                message = BrewerConstants.ICED_COFFEE_MESSAGE,
+                prepared = VALID_DATE
             };
             var main = new Main() { temp = ICED_COFFEE_TEMPERATURE };
             var weather = new Weather() { main = main };
@@ -75,9 +77,9 @@ namespace CoffeeMachineTest
                 .Returns(Task.FromResult(weather));
 
             _service = new BrewService(
-                _timer.Object, 
-                _brewer.Object, 
-                _httpClient.Object, 
+                _timer.Object,
+                _brewer.Object,
+                _httpClient.Object,
                 _configuration.Object);
             var res = await _service.Brew();
 
@@ -102,9 +104,9 @@ namespace CoffeeMachineTest
                 .Returns(Task.FromResult(weather));
 
             _service = new BrewService(
-                _timer.Object, 
-                _brewer.Object, 
-                _httpClient.Object, 
+                _timer.Object,
+                _brewer.Object,
+                _httpClient.Object,
                 _configuration.Object);
 
             for (var i = 0; i < 4; i++)
