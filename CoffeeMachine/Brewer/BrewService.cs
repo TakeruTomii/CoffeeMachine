@@ -2,7 +2,6 @@
 using CoffeeMachine.Brewer.Model;
 using CoffeeMachine.CustomException;
 using CoffeeMachine.Infrastracuture;
-using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CoffeeMachine.Brewer
@@ -15,7 +14,7 @@ namespace CoffeeMachine.Brewer
         private readonly string _weatherApiKey;
 
         public BrewService(
-            ICoffeeTimer timer, 
+            ICoffeeTimer timer,
             ICoffeeBrewer brewer,
             IHttpClientService httpClient,
             IConfiguration configuration)
@@ -89,7 +88,8 @@ namespace CoffeeMachine.Brewer
         private string queryBuilder(Dictionary<string, string> parameters)
         {
             var builder = new StringBuilder();
-            foreach ( var parameter in parameters ) { 
+            foreach (var parameter in parameters)
+            {
                 builder.Append(parameter.Key)
                     .Append(BrewerConstants.CONNECTOR_KEY_VALUE)
                     .Append(parameter.Value)

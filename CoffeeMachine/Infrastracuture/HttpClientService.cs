@@ -1,9 +1,8 @@
 ﻿using System.Text.Json;
-using System.Xml.Linq;
 
 namespace CoffeeMachine.Infrastracuture
 {
-    public class HttpClientService: IHttpClientService
+    public class HttpClientService : IHttpClientService
     {
         readonly HttpClient _httpClient;
 

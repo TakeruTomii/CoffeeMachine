@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace CoffeeMachine.Brewer.Model
+﻿namespace CoffeeMachine.Brewer.Model
 {
     public class Weather
     {
