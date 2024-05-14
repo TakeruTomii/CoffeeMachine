@@ -22,7 +22,7 @@ namespace CoffeeMachine.Brewer
             _timer = timer;
             _brewer = brewer;
             _httpClient = httpClient;
-            _weatherApiKey = configuration[BrewerConstants.KEY_WEATHER_API_KEY];
+            _weatherApiKey = configuration[BrewerConstants.KEY_WEATHER_API_KEY] ?? string.Empty;
         }
         public async Task<Coffee> Brew()
         {
@@ -54,7 +54,8 @@ namespace CoffeeMachine.Brewer
         private bool IsAprilFool(string dateTime)
         {
             var date = DateTime.Parse(dateTime);
-            return date.Day == 1 && date.Month == 4;
+            return date.Day == BrewerConstants.APRIL_FOOL_DAY
+                && date.Month == BrewerConstants.APRIL_FOOL_MONTH;
         }
 
         private async Task<bool> ShouldMakeIcedCoffee()
@@ -66,7 +67,8 @@ namespace CoffeeMachine.Brewer
         {
             Uri weatherUrl = ComposeCurrentTemperatureUrl();
             var weather = await _httpClient.GetAsync<Weather>(weatherUrl);
-            return Convert.ToInt32(Math.Floor(weather.main.temp));
+
+            return (int)Math.Floor(weather.main.temp);
         }
 
         private Uri ComposeCurrentTemperatureUrl()
@@ -95,7 +97,10 @@ namespace CoffeeMachine.Brewer
                     .Append(parameter.Value)
                     .Append(BrewerConstants.CONNECTOR_PARAMS);
             }
-            builder.Remove(builder.Length - 1, 1);
+            var lastIndex = builder.Length - 1;
+            var removeCharacterNumber = 1;
+            builder.Remove(lastIndex, removeCharacterNumber);
+
             return builder.ToString();
         }
     }

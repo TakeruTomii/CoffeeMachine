@@ -16,5 +16,7 @@
         public const string PARAM_APIKEY = "appid";
         public const string CONNECTOR_KEY_VALUE = "=";
         public const string CONNECTOR_PARAMS = "&";
+        public const int APRIL_FOOL_DAY = 1;
+        public const int APRIL_FOOL_MONTH = 4;
     }
 }
