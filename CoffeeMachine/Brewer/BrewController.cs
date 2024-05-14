@@ -29,10 +29,14 @@ namespace CoffeeMachine.Brewer
             }
             catch (TeaPotException ex)
             {
+                _logger.LogError(ex.Message);
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(StatusCodes.Status418ImATeapot, value: ex.Message);
             }
             catch (OutOfCoffeeException ex)
             {
+                _logger.LogError(ex.Message);
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(StatusCodes.Status503ServiceUnavailable, value: ex.Message);
             }
         }
